@@ -1,3 +1,28 @@
+async function handleInputChange(inputElement){
+    var searchItem = inputElement.value;
+    try{
+        let response = await fetch(`http://localhost:8080/product/productName/${searchItem}`);
+        if(response.ok){
+            const data = await response.json();
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+            data.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.classList.add('product');
+                productItem.innerHTML = `
+                    <img src="${product.imageUrl}" alt="${product.productName}">
+                    <h3>${product.productName}</h3>
+                    <p>Rs ${product.price}</p>
+                    <button class="add-to-cart" onclick="addCart('${product.productId}')">Add to Cart</button>
+                `;
+                productList.appendChild(productItem);
+            })
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 const addCart = async (productId) => {
     try{
         let response = await fetch(`http://localhost:8080/cart/add/${productId}`,{method: 'POST', headers: {

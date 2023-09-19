@@ -1,3 +1,16 @@
+const addCart = async (productId) => {
+    try{
+        let response = await fetch(`http://localhost:8080/cart/add/${productId}`,{method: 'POST', headers: {
+            'Content-Type': 'application/json', 
+        }})
+        if(response.ok){
+            console.log("Successfull");
+        }
+    }
+    catch(error){
+        console.error(error);
+    }
+}
 const home = async (event) => {
     event.preventDefault(); 
     try {
@@ -13,7 +26,7 @@ const home = async (event) => {
                     <img src="${product.imageUrl}" alt="${product.productName}">
                     <h3>${product.productName}</h3>
                     <p>Rs ${product.price}</p>
-                    <button>Add to Cart</button>
+                    <button class="add-to-cart" onclick="addCart('${product.productId}')">Add to Cart</button>
                 `;
                 productList.appendChild(productItem);
             });

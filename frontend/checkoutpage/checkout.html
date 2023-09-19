@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="checkout.css" /> 
+        <script src="checkout.js"></script> 
+    </head>
+    <body>
+        <div class="container">
+            <h3>Checkout and Order Placement</h3>
+            <form>
+                <table>
+                    <tr><input type="text" id="fullname" value="Full Name"></tr>
+                    <tr><input type="text" id="phone" value="Mobile No"></tr>
+                    <tr><h2>Payment Details</h2></tr>
+                    <tr><input type="text" id="cardholdername" value="CardHolder Name"></tr>
+                    <tr><input type="text" id="cardnumber" value="Credit/Debit Number"></tr>
+                    <tr>
+                        <input type="date" id="expirydate">
+                        <input type="text" id="CVV" value="CVV">
+                    </tr>
+                    <tr>
+                        <div class="total" id="total">
+                            <h3 class="'total-amount">Total: </h3>
+                        </div>
+                    </tr>
+                    <tr><input type="submit" value="Place Order" id="placeOrder"></tr>
+                </table>
+            </form>
+        </div>
+        
+    </body>
+</html>

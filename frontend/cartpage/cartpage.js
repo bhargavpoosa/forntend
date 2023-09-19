@@ -67,7 +67,7 @@ const cart = async (event) => {
                     <h3 class="total-value">Rs ${totalAmount}</h3>
                 </div>
                 <div class="checkout-btn">
-                    <a href="../checkoutpage/checkoutpage.html">Checkout</a>
+                    <a href="../checkoutpage/checkout.html">Checkout</a>
                 </div>`;
             checkoutDetails.appendChild(checkoutItem);
         } else {

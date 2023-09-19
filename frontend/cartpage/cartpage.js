@@ -1,6 +1,5 @@
 const addProduct = async (prodId) => {
     try{
-        cartList = document.getElementById('cart-items');
         let add = await fetch(`http://localhost:8080/cart/add/${prodId}`, {method: 'POST', headers: {
             'Content-Type': 'application/json', 
         }})
@@ -15,7 +14,6 @@ const addProduct = async (prodId) => {
 
 const removeProduct = async (prodId) => {
     try{
-        cartList = document.getElementById('cart-items');
         let remove = await fetch(`http://localhost:8080/cart/remove/${prodId}`, {method: 'POST', headers: {
             'Content-Type': 'application/json', 
         }})

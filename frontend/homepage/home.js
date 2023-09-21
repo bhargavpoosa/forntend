@@ -36,6 +36,13 @@ const addCart = async (productId) => {
         console.error(error);
     }
 }
+
+function redirect(productId){
+    console.log("here");
+    const productPageUrl = `../productDetail/productDetail.html?productId=${productId}`;
+    window.location.href = productPageUrl;
+}
+
 const home = async (event) => {
     event.preventDefault(); 
     try {
@@ -48,7 +55,9 @@ const home = async (event) => {
                 const productItem = document.createElement('div');
                 productItem.classList.add('product');
                 productItem.innerHTML = `
-                    <img src="${product.imageUrl}" alt="${product.productName}">
+                    <a href="../productDetail/productDetail.html?productId=${product.productId}" onclick="redirect('${product.productId}')">
+                        <img src="${product.imageUrl}" alt="${product.productName}">
+                    </a>
                     <h3>${product.productName}</h3>
                     <p>Rs ${product.price}</p>
                     <button class="add-to-cart" onclick="addCart('${product.productId}')">Add to Cart</button>

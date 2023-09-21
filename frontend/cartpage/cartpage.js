@@ -26,6 +26,18 @@ const removeProduct = async (prodId) => {
     }
 }
 
+const deleteProduct = async (prodId) => {
+    try{
+        let isDeleted = await fetch(`http://localhost:8080/cart/${prodId}`, {method: 'POST' 
+        })
+        if(isDeleted.ok){
+            cart();
+        }
+    }
+    catch(error){
+        console.error("An error occurred:", error);
+    }
+}
 const cart = async (event) => {
     try {
         let response = await fetch("http://localhost:8080/cart/");
@@ -53,6 +65,7 @@ const cart = async (event) => {
                                 <span class="product-quantity">${cartItem.quantity}</span>
                                 <button class="incre-button" onclick="addProduct('${cartItem.prod_id}')">+</button>
                             </div> 
+                            <button class="delete-button" onclick="deleteProduct('${cartItem.prod_id}')">Remove</button>
                         `;
                         cartList.appendChild(cartItemElement);
                     });

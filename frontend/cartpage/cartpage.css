@@ -88,9 +88,14 @@
 }
 
 .incre-decre-btn .product-quantity {
-    width: 70px;
+    width: 50px;
     display: inline-block;
     text-align: center;
+}
+
+.delete-button{
+    margin-top: 20px;
+    height: 40px;
 }
 
 .checkout{

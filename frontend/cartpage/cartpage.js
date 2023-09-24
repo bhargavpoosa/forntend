@@ -1,6 +1,6 @@
-const addProduct = async (prodId) => {
+const addProduct = async (username, prodId) => {
     try{
-        let add = await fetch(`http://localhost:8080/cart/add/${prodId}`, {method: 'POST', headers: {
+        let add = await fetch(`http://localhost:8080/cart/add/${username}/${prodId}`, {method: 'POST', headers: {
             'Content-Type': 'application/json', 
         }})
         if(add.ok){
@@ -12,9 +12,9 @@ const addProduct = async (prodId) => {
     }
 }
 
-const removeProduct = async (prodId) => {
+const removeProduct = async (username, prodId) => {
     try{
-        let remove = await fetch(`http://localhost:8080/cart/remove/${prodId}`, {method: 'POST', headers: {
+        let remove = await fetch(`http://localhost:8080/cart/remove/${username}/${prodId}`, {method: 'POST', headers: {
             'Content-Type': 'application/json', 
         }})
         if(remove.ok){
@@ -26,9 +26,9 @@ const removeProduct = async (prodId) => {
     }
 }
 
-const deleteProduct = async (prodId) => {
+const deleteProduct = async (username, prodId) => {
     try{
-        let isDeleted = await fetch(`http://localhost:8080/cart/${prodId}`, {method: 'POST' 
+        let isDeleted = await fetch(`http://localhost:8080/cart/${username}/${prodId}`, {method: 'POST' 
         })
         if(isDeleted.ok){
             cart();
@@ -39,8 +39,16 @@ const deleteProduct = async (prodId) => {
     }
 }
 const cart = async (event) => {
+    const url = new URL(window.location.href);
+    const username = url.searchParams.get("username");
+    const password = url.searchParams.get("password");
+    console.log("From Cart", username, password);
+
+    var closeCart = document.getElementById("close-cart-link");
+    var homeUrl = `../homepage/home.html?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+    closeCart.href = homeUrl;
     try {
-        let response = await fetch("http://localhost:8080/cart/");
+        let response = await fetch(`http://localhost:8080/cart/${username}`);
         if (response.ok) {
             const data = await response.json();
             console.log("Response: ", data);
@@ -61,11 +69,11 @@ const cart = async (event) => {
                                 <p>Rs ${cartItem.price}</p>
                             </div>
                             <div class="incre-decre-btn">
-                                <button class="decre-button" onclick="removeProduct('${cartItem.prod_id}')">-</button>
+                                <button class="decre-button" onclick="removeProduct('${username}','${cartItem.prod_id}')">-</button>
                                 <span class="product-quantity">${cartItem.quantity}</span>
-                                <button class="incre-button" onclick="addProduct('${cartItem.prod_id}')">+</button>
+                                <button class="incre-button" onclick="addProduct('${username}','${cartItem.prod_id}')">+</button>
                             </div> 
-                            <button class="delete-button" onclick="deleteProduct('${cartItem.prod_id}')">Remove</button>
+                            <button class="delete-button" onclick="deleteProduct('${username}','${cartItem.prod_id}')">Remove</button>
                         `;
                         cartList.appendChild(cartItemElement);
                     });
@@ -78,7 +86,7 @@ const cart = async (event) => {
                     <h3 class="total-value">Rs ${totalAmount}</h3>
                 </div>
                 <div class="checkout-btn">
-                    <a href="../checkoutpage/checkout.html">Checkout</a>
+                    <a href="../checkoutpage/checkout.html?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}">Checkout</a>
                 </div>`;
             checkoutDetails.appendChild(checkoutItem);
         } else {

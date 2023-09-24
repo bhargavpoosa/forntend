@@ -3,9 +3,9 @@ function getQueryParam(name) {
     return urlParams.get(name);
 }
 
-const addCart = async (productId) => {
+const addCart = async (username, productId) => {
     try{
-        let response = await fetch(`http://localhost:8080/cart/add/${productId}`,{method: 'POST', headers: {
+        let response = await fetch(`http://localhost:8080/cart/add/${username}/${productId}`,{method: 'POST', headers: {
             'Content-Type': 'application/json', 
         }})
         if(response.ok){
@@ -18,16 +18,22 @@ const addCart = async (productId) => {
 }
 
 const detailPage = async(event) => {
+    const url = new URL(window.location.href);
+    const username = url.searchParams.get("username");
+    const password = url.searchParams.get("password");
+
     event.preventDefault(); 
     const productId = getQueryParam("productId");
     console.log("ProductId", productId);
 
     try{
         const container = document.getElementById('container');
+        let productDetails = await fetch(`http://localhost:8080/product/productDetails/${productId}`);
         let response = await fetch(`http://localhost:8080/product/${productId}`);
         console.log(response);
-        if(response.ok){
+        if(response.ok && productDetails.ok){
             const product = await response.json();
+            const prodDetails = await productDetails.json();
             console.log(product);
             const productLayout = document.createElement('div');
             productLayout.classList.add('product-layout');
@@ -45,10 +51,9 @@ const detailPage = async(event) => {
                         ${product.description}
                     </p>
                     <div class="cart">
-                        <button class="add-to-cart" onclick="addCart('${product.productId}')">
+                        <button class="add-to-cart" onclick="addCart('${username}','${product.productId}')">
                             Add to Cart
                         </button>
-                        <a href="../cartpage/cartpage.html">Cart</a>
                     </div>
                     <div class="return-policy">
                         <ul>
@@ -64,6 +69,14 @@ const detailPage = async(event) => {
                                 Policy.
                             </li>
                         </ul>
+                    </div>
+                    <div class="prod-details">
+                        <p class="product-reviews">
+                            Review: ${prodDetails.productReviews}
+                        </p>
+                        <p class="product-ratings">
+                            Rating: ${prodDetails.productRatings}/5
+                        </p>
                     </div>
                 </div>
             `

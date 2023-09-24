@@ -32,6 +32,11 @@ body{
     text-decoration: none;
 }
 
+.navbar a:hover{
+    color: black;
+    background-color: white;
+}
+
 .navbar .search{
     display: flex;
     flex-direction: row;
@@ -61,6 +66,10 @@ body{
     width: 100%;
     margin-bottom: 20px;
 }
+.product img:hover{
+    border: 2px solid black;
+}
+
 .product h3{
     margin-bottom: 20px;
     text-align: center;
@@ -79,5 +88,10 @@ body{
     height: 30px;
     padding-block: 20px;
     color: white;
+    font-weight: 200px;
     background-color: black;
+}
+
+.product button:hover{
+    background-color: rgb(123, 123, 123);;
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="signuppage.css">
+    </head>
+    <body>
+        <div class="signup-page">
+            <h2 class="header">Signup Page</h2>
+            <form id="signup-form">
+                <table>
+                    <tr><input type="text" placeholder="UserName" id="username"></tr>
+                    <tr><input type="password" placeholder="Password" id="password"></tr>
+                    <tr>
+                        <div id="radio-btn">
+                            <label for="role">Role:</label>
+                            <input id="user-role" type="radio" name="role" value="ROLE_USER">User
+                            <input id="admin-role" type="radio" name="role" value="ROLE_ADMIN"> Admin
+                        </div>
+                    </tr>
+                    <tr><input type="submit" value="Signup" id="signup-btn"></tr>
+                </table>
+            </form>
+        </div>
+        <script src="signuppage.js"></script>
+        
+    </body>
+</html>

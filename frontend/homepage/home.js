@@ -23,11 +23,18 @@ async function handleInputChange(inputElement){
         console.log(error);
     }
 }
-const addCart = async (productId) => {
+const addCart = async (productId, username, password) => {
     try{
-        let response = await fetch(`http://localhost:8080/cart/add/${productId}`,{method: 'POST', headers: {
-            'Content-Type': 'application/json', 
-        }})
+        console.log("From Cart", username, password);
+
+        const basicAuth = btoa(`${username}:${password}`);
+        console.log(`Basic ${basicAuth}`);
+        let response = await fetch(`http://localhost:8080/cart/add/${username}/${productId}`,{method: 'POST', headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${basicAuth}`,
+            'Accept': 'application/json' 
+        }
+    });
         if(response.ok){
             console.log("Successfull");
         }
@@ -38,13 +45,22 @@ const addCart = async (productId) => {
 }
 
 function redirect(productId){
-    console.log("here");
     const productPageUrl = `../productDetail/productDetail.html?productId=${productId}`;
     window.location.href = productPageUrl;
 }
 
 const home = async (event) => {
     event.preventDefault(); 
+    const url = new URL(window.location.href);
+    const username = url.searchParams.get("username");
+    const password = url.searchParams.get("password");
+    console.log("From Home", username, password);
+
+    var cartLink = document.getElementById("cartLink");
+    var cartUrl = `../cartpage/cartpage.html?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+    cartLink.href = cartUrl;
+
+
     try {
         let response = await fetch("http://localhost:8080/product/");
         if (response.ok) {
@@ -55,12 +71,12 @@ const home = async (event) => {
                 const productItem = document.createElement('div');
                 productItem.classList.add('product');
                 productItem.innerHTML = `
-                    <a href="../productDetail/productDetail.html?productId=${product.productId}" onclick="redirect('${product.productId}')">
+                    <a href="../productDetail/productDetail.html?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&productId=${product.productId}" onclick="redirect('${product.productId}')">
                         <img src="${product.imageUrl}" alt="${product.productName}">
                     </a>
                     <h3>${product.productName}</h3>
                     <p>Rs ${product.price}</p>
-                    <button class="add-to-cart" onclick="addCart('${product.productId}')">Add to Cart</button>
+                    <button class="add-cart" onclick="addCart('${product.productId}', '${username}', '${password}')">Add to Cart</button>
                 `;
                 productList.appendChild(productItem);
             });

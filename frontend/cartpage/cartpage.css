@@ -50,6 +50,13 @@
     height: 40px;
     text-align: center;
     padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.cart .header #close-cart a:hover{
+    color: white;
+    background-color: black;
 }
 
 .cart .header h1 {
@@ -66,6 +73,7 @@
     justify-content: space-between;
     gap: 10px;
     margin-bottom: 10px;
+    border-bottom: 1px solid black;
 }
 
 .cart-item img{
@@ -97,6 +105,9 @@
     margin-top: 20px;
     height: 40px;
 }
+.delete-button:hover{
+    border: 1px solid black;
+}
 
 .checkout{
     display: flex;
@@ -104,6 +115,7 @@
     justify-content: center;
     align-items: cneter;
 }
+
 
 .total-amount{
     display: flex;

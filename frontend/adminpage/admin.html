@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="admin.css">
+    </head>
+    <body>
+        <div class="admin-page">
+            <h2 class="header">Add Products</h2>
+            <form id="admin-form">
+                <table>
+                    <tr><input type="text" id="productName" name="productName" placeholder="Product Name" required></tr>
+                    <tr><input type="text" id="imageUrl" name="imageUrl" placeholder="Image URL" required></tr>
+                    <tr><input type="text" id="price" name="price" placeholder="Price" required></tr>
+                    <tr><input type="text" id="itemCount" name="itemCount" placeholder="No of items" required></tr>
+                    <tr>
+                        <div id="desc">
+                            <textarea id="description" name="description" rows="6" cols="48" placeholder="Product Description"></textarea>
+                        </div>
+                    </tr>
+                    <tr><button type="submit" id="add-btn">Add Product</button></tr>
+                </table>
+            </form>
+        </div>
+        <script src="admin.js"></script>
+    </body>
+</html>

@@ -1,4 +1,6 @@
 # frontend
+# Deployed in github pages
+# Frontend URL: https://bhargavpoosa.github.io/frontend/frontend/signuppage/signuppage.html
 
 <img width="1635" alt="Screenshot 2023-09-24 at 11 53 13 PM" src="https://github.com/bhargavpoosa/frontend/assets/101353589/94ab07b6-0f93-4ee5-a61d-3615cb44bb67">
 <img width="1635" alt="Screenshot 2023-09-24 at 11 53 28 PM" src="https://github.com/bhargavpoosa/frontend/assets/101353589/9f40bf91-4feb-4f79-b812-d4427543a7a3">

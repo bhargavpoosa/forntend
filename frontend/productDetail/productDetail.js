@@ -33,7 +33,7 @@ const detailPage = async(event) => {
         const container = document.getElementById('container');
         let productDetails = await fetch(`http://localhost:8080/product/productDetails/${productId}`);
         let response = await fetch(`http://localhost:8080/product/${productId}`);
-        console.log(response);
+        console.log(productDetails);
         if(response.ok && productDetails.ok){
             const product = await response.json();
             const prodDetails = await productDetails.json();

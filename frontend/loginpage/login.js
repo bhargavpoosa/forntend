@@ -24,7 +24,7 @@ const onsubmit = async(e) => {
             if(user.roles === "ROLE_USER")
                 location.href = `../homepage/home.html?username=${user.username}&password=${user.password}`;
             else
-                location.href = "../adminpage/admin.html";
+                location.href = `../adminpage/admin.html?username=${user.username}&password=${user.password}`;
         }
         else {
             loginErrorMsg.style.opacity = 1;

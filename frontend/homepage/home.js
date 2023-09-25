@@ -1,5 +1,9 @@
+const url = new URL(window.location.href);
+const username = url.searchParams.get("username");
+const password = url.searchParams.get("password");
 async function handleInputChange(inputElement){
     var searchItem = inputElement.value;
+    console.log(username, password);
     try{
         let response = await fetch(`http://localhost:8080/product/productName/${searchItem}`);
         if(response.ok){
@@ -10,10 +14,12 @@ async function handleInputChange(inputElement){
                 const productItem = document.createElement('div');
                 productItem.classList.add('product');
                 productItem.innerHTML = `
-                    <img src="${product.imageUrl}" alt="${product.productName}">
+                    <a href="../productDetail/productDetail.html?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&productId=${product.productId}" onclick="redirect('${product.productId}')">
+                        <img src="${product.imageUrl}" alt="${product.productName}">
+                    </a>
                     <h3>${product.productName}</h3>
                     <p>Rs ${product.price}</p>
-                    <button class="add-to-cart" onclick="addCart('${product.productId}')">Add to Cart</button>
+                    <button class="add-to-cart" onclick="addCart('${product.productId}', '${username}', '${password}')">Add to Cart</button>
                 `;
                 productList.appendChild(productItem);
             })
@@ -50,10 +56,9 @@ function redirect(productId){
 }
 
 const home = async (event) => {
+    console.log("HOME");
     event.preventDefault(); 
-    const url = new URL(window.location.href);
-    const username = url.searchParams.get("username");
-    const password = url.searchParams.get("password");
+    
     console.log("From Home", username, password);
 
     var cartLink = document.getElementById("cartLink");

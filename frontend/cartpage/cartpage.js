@@ -1,8 +1,11 @@
-const addProduct = async (username, prodId) => {
+const addProduct = async (username,password, prodId) => {
     try{
-        let add = await fetch(`http://localhost:8080/cart/add/${username}/${prodId}`, {method: 'POST', headers: {
-            'Content-Type': 'application/json', 
-        }})
+        const basicAuth = btoa(`${username}:${password}`);
+        let add = await fetch(`http://localhost:8080/cart/add/${username}/${prodId}`,{method: 'POST', headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${basicAuth}`,
+            'Accept': 'application/json' 
+        }});
         if(add.ok){
             cart();
         }
@@ -12,11 +15,14 @@ const addProduct = async (username, prodId) => {
     }
 }
 
-const removeProduct = async (username, prodId) => {
+const removeProduct = async (username, password, prodId) => {
     try{
+        const basicAuth = btoa(`${username}:${password}`);
         let remove = await fetch(`http://localhost:8080/cart/remove/${username}/${prodId}`, {method: 'POST', headers: {
-            'Content-Type': 'application/json', 
-        }})
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${basicAuth}`,
+            'Accept': 'application/json' 
+        }});
         if(remove.ok){
             cart();
         }
@@ -26,10 +32,14 @@ const removeProduct = async (username, prodId) => {
     }
 }
 
-const deleteProduct = async (username, prodId) => {
+const deleteProduct = async (username, password, prodId) => {
     try{
-        let isDeleted = await fetch(`http://localhost:8080/cart/${username}/${prodId}`, {method: 'POST' 
-        })
+        const basicAuth = btoa(`${username}:${password}`);
+        let isDeleted = await fetch(`http://localhost:8080/cart/${username}/${prodId}`,{method: 'POST', headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${basicAuth}`,
+            'Accept': 'application/json' 
+        }});
         if(isDeleted.ok){
             cart();
         }
@@ -48,7 +58,12 @@ const cart = async (event) => {
     var homeUrl = `../homepage/home.html?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
     closeCart.href = homeUrl;
     try {
-        let response = await fetch(`http://localhost:8080/cart/${username}`);
+        const basicAuth = btoa(`${username}:${password}`);
+        let response = await fetch(`http://localhost:8080/cart/${username}`,{method: 'GET', headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${basicAuth}`,
+            'Accept': 'application/json' 
+        }});
         if (response.ok) {
             const data = await response.json();
             console.log("Response: ", data);
@@ -69,11 +84,11 @@ const cart = async (event) => {
                                 <p>Rs ${cartItem.price}</p>
                             </div>
                             <div class="incre-decre-btn">
-                                <button class="decre-button" onclick="removeProduct('${username}','${cartItem.prod_id}')">-</button>
+                                <button class="decre-button" onclick="removeProduct('${username}','${password}','${cartItem.prod_id}')">-</button>
                                 <span class="product-quantity">${cartItem.quantity}</span>
-                                <button class="incre-button" onclick="addProduct('${username}','${cartItem.prod_id}')">+</button>
+                                <button class="incre-button" onclick="addProduct('${username}','${password}','${cartItem.prod_id}')">+</button>
                             </div> 
-                            <button class="delete-button" onclick="deleteProduct('${username}','${cartItem.prod_id}')">Remove</button>
+                            <button class="delete-button" onclick="deleteProduct('${username}','${password}','${cartItem.prod_id}')">Remove</button>
                         `;
                         cartList.appendChild(cartItemElement);
                     });

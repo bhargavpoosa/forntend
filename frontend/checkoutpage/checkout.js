@@ -3,7 +3,12 @@ const saveOrder = async (event, username, password) => {
     try{
         event.preventDefault();
         console.log('hi');
-        const cartProducts = await fetch(`http://localhost:8080/cart/${username}`);
+        const basicAuth = btoa(`${username}:${password}`);
+        let cartProducts = await fetch(`http://localhost:8080/cart/${username}`,{method: 'GET', headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${basicAuth}`,
+            'Accept': 'application/json' 
+        }});
         let productList = "";
         let totalAmount = 0;
         if(cartProducts.ok){
@@ -19,6 +24,8 @@ const saveOrder = async (event, username, password) => {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Basic ${basicAuth}`,
+              'Accept': 'application/json'
             },
             body: JSON.stringify({ totalAmount, productList, username})
           });
@@ -32,11 +39,16 @@ const saveOrder = async (event, username, password) => {
         console.log(error);
     }
 }
-const checkout = async (username) => {
+const checkout = async (username, password) => {
     try{
         let Amount = 0;
         const total = document.getElementById('total');
-        const response = await fetch(`http://localhost:8080/cart/${username}`);
+        const basicAuth = btoa(`${username}:${password}`);
+        let response = await fetch(`http://localhost:8080/cart/${username}`,{method: 'GET', headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${basicAuth}`,
+            'Accept': 'application/json' 
+        }});
         if(response.ok){
             const data = await response.json();
             console.log(data);
@@ -67,5 +79,5 @@ document.addEventListener('DOMContentLoaded', () => {
         saveOrder(event, username, password);
     });
 
-    checkout(username);
+    checkout(username, password);
 });

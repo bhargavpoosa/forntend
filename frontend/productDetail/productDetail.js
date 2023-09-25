@@ -3,11 +3,14 @@ function getQueryParam(name) {
     return urlParams.get(name);
 }
 
-const addCart = async (username, productId) => {
+const addCart = async (username, password, productId) => {
     try{
+        const basicAuth = btoa(`${username}:${password}`);
         let response = await fetch(`http://localhost:8080/cart/add/${username}/${productId}`,{method: 'POST', headers: {
-            'Content-Type': 'application/json', 
-        }})
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${basicAuth}`,
+            'Accept': 'application/json' 
+        }});
         if(response.ok){
             console.log("Successfull");
         }
@@ -51,7 +54,7 @@ const detailPage = async(event) => {
                         ${product.description}
                     </p>
                     <div class="cart">
-                        <button class="add-to-cart" onclick="addCart('${username}','${product.productId}')">
+                        <button class="add-to-cart" onclick="addCart('${username}','${password}','${product.productId}')">
                             Add to Cart
                         </button>
                     </div>
